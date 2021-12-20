@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package protoc;
+
+option go_package = "github.com/jaden7856/Golang_TCP-Socket/gRPC/protoc";
+
+service GRPCSendMsg {
+  rpc SendMsg (MessageRequest) returns (MessageReply) {}
+}
+
+message MessageRequest {
+  string message = 1;
+}
+
+message MessageReply {
+  string message = 1;
+}
