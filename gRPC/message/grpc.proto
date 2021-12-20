@@ -4,14 +4,14 @@ package proto;
 
 option go_package = ".proto";
 
-service grpcSendMsg {
-  rpc sendMsg (messageRequest) returns (messageReply) {}
+service GRPCSendMsg {
+  rpc SendMsg (MessageRequest) returns (MessageReply) {}
 }
 
-message messageRequest {
+message MessageRequest {
   string message = 1;
 }
 
-message messageReply {
+message MessageReply {
   string message = 1;
 }
