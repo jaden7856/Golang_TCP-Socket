@@ -10,12 +10,12 @@ import (
 )
 
 const (
-	CONN_Type = "tcp"
-	CONN_Port = 8080
+	Conn_Type string = "tcp"
+	Conn_Port int    = 8080
 )
 
 func main() {
-	conn, err := net.Dial(CONN_Type, ":"+strconv.Itoa(CONN_Port))
+	conn, err := net.Dial(Conn_Type, ":"+strconv.Itoa(Conn_Port))
 
 	if err != nil {
 		panic(err)
@@ -38,7 +38,12 @@ func main() {
 		var s string
 		fmt.Print("입력하세요 : ")
 		fmt.Scanln(&s)
-		conn.Write([]byte(s))
+
+		_, err := conn.Write([]byte(s))
+		if err != nil {
+			fmt.Println(err)
+		}
+
 		time.Sleep(time.Duration(3) * time.Second)
 	}
 }

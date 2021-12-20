@@ -33,7 +33,6 @@ func main() {
 		log.Fatalf("TCP dial: %s", err)
 	}
 
-	// Setup client side of yamux
 	session, err := yamux.Client(conn, nil)
 	if err != nil {
 		log.Fatal(err)

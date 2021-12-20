@@ -15,14 +15,13 @@ const (
 )
 
 func main() {
-	fmt.Println("Start server!")
-
 	listen, err := net.Listen(ConnType, ":"+strconv.Itoa(ConnPort))
 
 	if err != nil {
-		//fmt.Printf("Fail to bind Address to %d; err : %s\n", port, err)
 		panic(err)
 	}
+	fmt.Println("Start server!")
+
 	defer listen.Close()
 
 	for {
