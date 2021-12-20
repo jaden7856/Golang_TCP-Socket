@@ -1,4 +1,4 @@
-module Socket_gRPC
+module github.com/jaden7856/Golang_TCP-Socket
 
 go 1.17
 
