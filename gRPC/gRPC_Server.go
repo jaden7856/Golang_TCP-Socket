@@ -1,16 +1,20 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"golang.org/x/net/context"
 	"log"
 	"net"
 
-	pb "github.com/jaden7856/Golang_TCP-Socket/gRPC/message"
+	pb "github.com/jaden7856/Golang_TCP-Socket/gRPC/protoc"
 	"google.golang.org/grpc"
 )
 
+var port = flag.Int("port", 8080, "the port to serve on")
+
 type Server struct {
-	pb.UnimplementedGrpcSendMsgServer
+	pb.UnimplementedGRPCSendMsgServer
 }
 
 func (s *Server) SendMsg(ctx context.Context, in *pb.MessageRequest) (*pb.MessageReply, error) {
@@ -19,14 +23,14 @@ func (s *Server) SendMsg(ctx context.Context, in *pb.MessageRequest) (*pb.Messag
 }
 
 func main() {
-	lis, err := net.Listen("tcp", ":8080")
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
+	// gRPC 서버 생성
 	grpcServer := grpc.NewServer()
-
-	pb.RegisterGrpcSendMsgServer(grpcServer, &Server{})
+	pb.RegisterGRPCSendMsgServer(grpcServer, &Server{})
 
 	log.Printf("start gRPC server on 8080 port")
 	if err := grpcServer.Serve(lis); err != nil {
