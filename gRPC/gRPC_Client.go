@@ -42,15 +42,4 @@ func main() {
 	runtime.Gosched()
 	callSendMsg(msgc, msg3)
 
-	//eg, _ := errgroup.WithContext(context.Background())
-	//for i := 0; i < 3; i++ {
-	//	eg.Go(func() error {
-	//		callSendMsg(msgc, msg)
-	//		return nil
-	//	})
-	//}
-	//if err := eg.Wait(); err != nil {
-	//	panic(err)
-	//}
-
 }
