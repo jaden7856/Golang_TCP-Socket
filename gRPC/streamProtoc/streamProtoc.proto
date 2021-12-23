@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package streamProtoc;
+
+option go_package = "github.com/jaden7856/Golang_TCP-Socket/gRPC/streamProtoc";
+
+service GRPCSendMsg {
+  rpc SendMsg (stream MessageRequest) returns (stream MessageReply) {}
+}
+
+message MessageRequest {
+  int32 num = 1;
+}
+
+message MessageReply {
+  int32 result = 1;
+}
