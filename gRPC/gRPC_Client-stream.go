@@ -2,13 +2,22 @@ package main
 
 import (
 	"context"
-	streamPb "github.com/jaden7856/Golang_TCP-Socket/gRPC/streamProtoc"
-	"google.golang.org/grpc"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"io"
 	"log"
 	"math/rand"
 	"time"
+
+	streamPb "github.com/jaden7856/Golang_TCP-Socket/gRPC/streamProtoc"
+	"google.golang.org/grpc"
 )
+
+var serviceConfig = `{
+		"loadBalancingPolicy": "round_robin",
+		"healthCheckConfig": {
+			"serviceName": "PingPong"
+		}
+	}`
 
 func sreamCallSendMsg(client streamPb.GRPCSendMsgClient) {
 	stream, err := client.SendMsg(context.Background())
@@ -54,7 +63,7 @@ func sreamCallSendMsg(client streamPb.GRPCSendMsgClient) {
 		}
 	}()
 
-	// third goroutine closes done channel
+	// goroutine closes done channel
 	go func() {
 		<-ctx.Done()
 		if err := ctx.Err(); err != nil {
@@ -68,13 +77,32 @@ func sreamCallSendMsg(client streamPb.GRPCSendMsgClient) {
 }
 
 func main() {
-	conn, err := grpc.Dial(":8080", grpc.WithInsecure())
+	options := []grpc.DialOption{
+		// ClientConn에 대한 전송 보안을 비활성화
+		grpc.WithInsecure(),
+		// 연결이 작동될 때까지 Dial 호출자가 차단. 이것이 없으면 Dial은 즉시 반환되고 서버 연결은 백그라운드에서 발생합니다.
+		grpc.WithBlock(),
+		grpc.WithDefaultServiceConfig(serviceConfig),
+	}
+
+	conn, err := grpc.Dial(":8080", options...)
+
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	defer conn.Close()
 
+	ctx := context.Background()
 	stmClient := streamPb.NewGRPCSendMsgClient(conn)
+	resp, err := healthpb.NewHealthClient(conn).Check(ctx, &healthpb.HealthCheckRequest{
+		Service: "test",
+	})
+
+	if err != nil {
+		log.Printf("can't connect grpc server: %v, code: %v\n", err, grpc.Code(err))
+	} else {
+		log.Printf("status: %s", resp.GetStatus().String())
+	}
 
 	sreamCallSendMsg(stmClient)
 }
