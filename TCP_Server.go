@@ -29,14 +29,14 @@ func main() {
 
 		if err != nil {
 			fmt.Println("Fail to Accept; err : ", err)
-			continue
+			contin
 		}
 		go connHandler(conn)
 	}
 }
 
 func connHandler(conn net.Conn) {
-	//defer conn.Close()
+	defer conn.Close()
 	rcvBuf := make([]byte, 4096)
 
 	for {
@@ -52,13 +52,11 @@ func connHandler(conn net.Conn) {
 		if reqLen > 0 {
 			data := rcvBuf[:reqLen]
 			fmt.Println(string(data))
-			_, err := conn.Write(data[:reqLen])
 
-			if err != nil {
+			if _, err := conn.Write(data[:reqLen]); err != nil {
 				fmt.Println(err)
 				return
 			}
 		}
-
 	}
 }

@@ -5,6 +5,12 @@ github.com/golang/protobuf/ptypes
 github.com/golang/protobuf/ptypes/any
 github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
+# github.com/google/seesaw v0.0.0-20210205180622-915f447b8ed8
+## explicit; go 1.12
+github.com/google/seesaw/common/seesaw
+github.com/google/seesaw/ipvs
+github.com/google/seesaw/netlink
+github.com/google/seesaw/pb/seesaw
 # github.com/hashicorp/yamux v0.0.0-20211028200310-0bc27b27de87
 ## explicit; go 1.15
 github.com/hashicorp/yamux
@@ -17,9 +23,6 @@ golang.org/x/net/http2/hpack
 golang.org/x/net/idna
 golang.org/x/net/internal/timeseries
 golang.org/x/net/trace
-# golang.org/x/sync v0.0.0-20190423024810-112230192c58
-## explicit
-golang.org/x/sync/errgroup
 # golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e
 ## explicit; go 1.17
 golang.org/x/sys/internal/unsafeheader
@@ -30,7 +33,7 @@ golang.org/x/text/secure/bidirule
 golang.org/x/text/transform
 golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
-# google.golang.org/genproto v0.0.0-20211208223120-3a66f561d7aa
+# google.golang.org/genproto v0.0.0-20211222154725-9823f7ba7562
 ## explicit; go 1.11
 google.golang.org/genproto/googleapis/rpc/status
 # google.golang.org/grpc v1.43.0
@@ -50,6 +53,8 @@ google.golang.org/grpc/credentials/insecure
 google.golang.org/grpc/encoding
 google.golang.org/grpc/encoding/proto
 google.golang.org/grpc/grpclog
+google.golang.org/grpc/health
+google.golang.org/grpc/health/grpc_health_v1
 google.golang.org/grpc/internal
 google.golang.org/grpc/internal/backoff
 google.golang.org/grpc/internal/balancerload
