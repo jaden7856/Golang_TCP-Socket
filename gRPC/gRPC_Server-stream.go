@@ -6,12 +6,21 @@ import (
 	"io"
 	"log"
 	"net"
+	"time"
 
 	streamPb "github.com/jaden7856/Golang_TCP-Socket/gRPC/streamProtoc"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
 
-var stPort = flag.Int("port", 8080, "the port to serve on")
+var (
+	stPort = flag.Int("port", 8080, "the port to serve on")
+	sleep  = flag.Duration("sleep", time.Second*5, "duration between changes in health")
+
+	serviceName = "test"
+	isHealth    = false
+)
 
 type stServer struct {
 	streamPb.UnimplementedGRPCSendMsgServer
@@ -24,7 +33,6 @@ func (*stServer) SendMsg(msgServer streamPb.GRPCSendMsg_SendMsgServer) error {
 	ctx := msgServer.Context()
 
 	for {
-
 		//exit if context is done
 		//or continue
 		select {
@@ -46,7 +54,6 @@ func (*stServer) SendMsg(msgServer streamPb.GRPCSendMsg_SendMsgServer) error {
 		}
 
 		// continue if number reveived from stream
-		// less than max
 		if req.Num <= max {
 			continue
 		}
@@ -69,8 +76,18 @@ func main() {
 	}
 
 	// gRPC 서버 생성
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(
+		//grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
+		//	grpc_recovery.StreamServerInterceptor(),
+		//)),
+	)
+
+	healthCheck := health.NewServer()
+	healthpb.RegisterHealthServer(grpcServer, healthCheck)
 	streamPb.RegisterGRPCSendMsgServer(grpcServer, &stServer{})
+
+	// 정상적으로 연결이 된 상태
+	healthCheck.SetServingStatus(serviceName, healthpb.HealthCheckResponse_SERVING)
 
 	log.Printf("start gRPC server on 8080 port")
 	if err := grpcServer.Serve(lis); err != nil {
