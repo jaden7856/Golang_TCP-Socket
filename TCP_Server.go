@@ -29,7 +29,7 @@ func main() {
 
 		if err != nil {
 			fmt.Println("Fail to Accept; err : ", err)
-			contin
+			continue
 		}
 		go connHandler(conn)
 	}
