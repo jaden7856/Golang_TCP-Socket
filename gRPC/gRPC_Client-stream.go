@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"io"
 	"log"
 	"math/rand"
@@ -10,14 +9,17 @@ import (
 
 	streamPb "github.com/jaden7856/Golang_TCP-Socket/gRPC/streamProtoc"
 	"google.golang.org/grpc"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
 
-var serviceConfig = `{
-		"loadBalancingPolicy": "round_robin",
-		"healthCheckConfig": {
-			"serviceName": "PingPong"
-		}
-	}`
+// "round_robin" - client는 모든 주소와 Connection을 맺게 된다.
+// 그리고 각 주소의 RPC로 순차적으로 하나씩 트래픽을 보내게 된다.
+//var serviceConfig = `{
+//		"loadBalancingPolicy": "round_robin",
+//		"healthCheckConfig": {
+//			"serviceName": "PingPong"
+//		}
+//	}`
 
 func sreamCallSendMsg(client streamPb.GRPCSendMsgClient) {
 	stream, err := client.SendMsg(context.Background())
@@ -82,7 +84,8 @@ func main() {
 		grpc.WithInsecure(),
 		// 연결이 작동될 때까지 Dial 호출자가 차단. 이것이 없으면 Dial은 즉시 반환되고 서버 연결은 백그라운드에서 발생합니다.
 		grpc.WithBlock(),
-		grpc.WithDefaultServiceConfig(serviceConfig),
+		// WithDefaultServiceConfig를 이용하여 gRPC feature 사용
+		//grpc.WithDefaultServiceConfig(serviceConfig),
 	}
 
 	conn, err := grpc.Dial(":8080", options...)
