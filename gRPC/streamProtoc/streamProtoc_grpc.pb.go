@@ -14,117 +14,117 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// GRPCSendMsgClient is the client API for GRPCSendMsg service.
+// SeSaFileClient is the client API for SeSaFile service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type GRPCSendMsgClient interface {
-	SendMsg(ctx context.Context, opts ...grpc.CallOption) (GRPCSendMsg_SendMsgClient, error)
+type SeSaFileClient interface {
+	Upload(ctx context.Context, opts ...grpc.CallOption) (SeSaFile_UploadClient, error)
 }
 
-type gRPCSendMsgClient struct {
+type seSaFileClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewGRPCSendMsgClient(cc grpc.ClientConnInterface) GRPCSendMsgClient {
-	return &gRPCSendMsgClient{cc}
+func NewSeSaFileClient(cc grpc.ClientConnInterface) SeSaFileClient {
+	return &seSaFileClient{cc}
 }
 
-func (c *gRPCSendMsgClient) SendMsg(ctx context.Context, opts ...grpc.CallOption) (GRPCSendMsg_SendMsgClient, error) {
-	stream, err := c.cc.NewStream(ctx, &GRPCSendMsg_ServiceDesc.Streams[0], "/streamProtoc.GRPCSendMsg/SendMsg", opts...)
+func (c *seSaFileClient) Upload(ctx context.Context, opts ...grpc.CallOption) (SeSaFile_UploadClient, error) {
+	stream, err := c.cc.NewStream(ctx, &SeSaFile_ServiceDesc.Streams[0], "/streamProtoc.SeSaFile/Upload", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &gRPCSendMsgSendMsgClient{stream}
+	x := &seSaFileUploadClient{stream}
 	return x, nil
 }
 
-type GRPCSendMsg_SendMsgClient interface {
-	Send(*MessageRequest) error
-	Recv() (*MessageReply, error)
+type SeSaFile_UploadClient interface {
+	Send(*DataFiles) error
+	Recv() (*UploadStatus, error)
 	grpc.ClientStream
 }
 
-type gRPCSendMsgSendMsgClient struct {
+type seSaFileUploadClient struct {
 	grpc.ClientStream
 }
 
-func (x *gRPCSendMsgSendMsgClient) Send(m *MessageRequest) error {
+func (x *seSaFileUploadClient) Send(m *DataFiles) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *gRPCSendMsgSendMsgClient) Recv() (*MessageReply, error) {
-	m := new(MessageReply)
+func (x *seSaFileUploadClient) Recv() (*UploadStatus, error) {
+	m := new(UploadStatus)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// GRPCSendMsgServer is the server API for GRPCSendMsg service.
-// All implementations must embed UnimplementedGRPCSendMsgServer
+// SeSaFileServer is the server API for SeSaFile service.
+// All implementations must embed UnimplementedSeSaFileServer
 // for forward compatibility
-type GRPCSendMsgServer interface {
-	SendMsg(GRPCSendMsg_SendMsgServer) error
-	mustEmbedUnimplementedGRPCSendMsgServer()
+type SeSaFileServer interface {
+	Upload(SeSaFile_UploadServer) error
+	mustEmbedUnimplementedSeSaFileServer()
 }
 
-// UnimplementedGRPCSendMsgServer must be embedded to have forward compatible implementations.
-type UnimplementedGRPCSendMsgServer struct {
+// UnimplementedSeSaFileServer must be embedded to have forward compatible implementations.
+type UnimplementedSeSaFileServer struct {
 }
 
-func (UnimplementedGRPCSendMsgServer) SendMsg(GRPCSendMsg_SendMsgServer) error {
-	return status.Errorf(codes.Unimplemented, "method SendMsg not implemented")
+func (UnimplementedSeSaFileServer) Upload(SeSaFile_UploadServer) error {
+	return status.Errorf(codes.Unimplemented, "method Upload not implemented")
 }
-func (UnimplementedGRPCSendMsgServer) mustEmbedUnimplementedGRPCSendMsgServer() {}
+func (UnimplementedSeSaFileServer) mustEmbedUnimplementedSeSaFileServer() {}
 
-// UnsafeGRPCSendMsgServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to GRPCSendMsgServer will
+// UnsafeSeSaFileServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SeSaFileServer will
 // result in compilation errors.
-type UnsafeGRPCSendMsgServer interface {
-	mustEmbedUnimplementedGRPCSendMsgServer()
+type UnsafeSeSaFileServer interface {
+	mustEmbedUnimplementedSeSaFileServer()
 }
 
-func RegisterGRPCSendMsgServer(s grpc.ServiceRegistrar, srv GRPCSendMsgServer) {
-	s.RegisterService(&GRPCSendMsg_ServiceDesc, srv)
+func RegisterSeSaFileServer(s grpc.ServiceRegistrar, srv SeSaFileServer) {
+	s.RegisterService(&SeSaFile_ServiceDesc, srv)
 }
 
-func _GRPCSendMsg_SendMsg_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(GRPCSendMsgServer).SendMsg(&gRPCSendMsgSendMsgServer{stream})
+func _SeSaFile_Upload_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SeSaFileServer).Upload(&seSaFileUploadServer{stream})
 }
 
-type GRPCSendMsg_SendMsgServer interface {
-	Send(*MessageReply) error
-	Recv() (*MessageRequest, error)
+type SeSaFile_UploadServer interface {
+	Send(*UploadStatus) error
+	Recv() (*DataFiles, error)
 	grpc.ServerStream
 }
 
-type gRPCSendMsgSendMsgServer struct {
+type seSaFileUploadServer struct {
 	grpc.ServerStream
 }
 
-func (x *gRPCSendMsgSendMsgServer) Send(m *MessageReply) error {
+func (x *seSaFileUploadServer) Send(m *UploadStatus) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *gRPCSendMsgSendMsgServer) Recv() (*MessageRequest, error) {
-	m := new(MessageRequest)
+func (x *seSaFileUploadServer) Recv() (*DataFiles, error) {
+	m := new(DataFiles)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// GRPCSendMsg_ServiceDesc is the grpc.ServiceDesc for GRPCSendMsg service.
+// SeSaFile_ServiceDesc is the grpc.ServiceDesc for SeSaFile service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var GRPCSendMsg_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "streamProtoc.GRPCSendMsg",
-	HandlerType: (*GRPCSendMsgServer)(nil),
+var SeSaFile_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "streamProtoc.SeSaFile",
+	HandlerType: (*SeSaFileServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "SendMsg",
-			Handler:       _GRPCSendMsg_SendMsg_Handler,
+			StreamName:    "Upload",
+			Handler:       _SeSaFile_Upload_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
