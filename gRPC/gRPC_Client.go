@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"time"
 
-	pb "github.com/jaden7856/Golang_TCP-Socket/gRPC/protoc"
+	pb "github.com/jaden7856/go-tcp_grpc-server-client/gRPC/protoc"
 	"google.golang.org/grpc"
 )
 
