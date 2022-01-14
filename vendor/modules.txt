@@ -8,12 +8,6 @@ github.com/golang/protobuf/ptypes/timestamp
 # github.com/hashicorp/yamux v0.0.0-20211028200310-0bc27b27de87
 ## explicit; go 1.15
 github.com/hashicorp/yamux
-# github.com/pkg/errors v0.9.1
-## explicit
-github.com/pkg/errors
-# github.com/tevino/tcp-shaker v0.0.0-20191112104505-00eab0aefc80
-## explicit; go 1.13
-github.com/tevino/tcp-shaker
 # golang.org/x/net v0.0.0-20211216030914-fe4d6282115f
 ## explicit; go 1.17
 golang.org/x/net/context
