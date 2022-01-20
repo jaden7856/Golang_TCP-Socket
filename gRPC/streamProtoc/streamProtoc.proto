@@ -4,14 +4,13 @@ package streamProtoc;
 
 option go_package = "github.com/jaden7856/go-tcp_grpc-server-client/gRPC/streamProtoc";
 
-service SeSaFile {
-  rpc Upload (stream dataFiles) returns (stream UploadStatus) {}
+service SeSaFileService {
+  rpc Upload (stream UploadRequest) returns (stream UploadResponse) {}
 }
 
-message dataFiles {
+message UploadRequest {
   bytes Content = 1;
-  string totalSize = 2;
-  string received = 3;
+  string Filename = 2;
 }
 
 enum UploadStatusCode {
@@ -20,7 +19,7 @@ enum UploadStatusCode {
   Failed = 2;
 }
 
-message UploadStatus {
+message UploadResponse {
   string Message = 1;
   UploadStatusCode Code = 2;
 }

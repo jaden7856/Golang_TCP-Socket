@@ -14,120 +14,120 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// SeSaFileClient is the client API for SeSaFile service.
+// SeSaFileServiceClient is the client API for SeSaFileService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type SeSaFileClient interface {
-	Upload(ctx context.Context, opts ...grpc.CallOption) (SeSaFile_UploadClient, error)
+type SeSaFileServiceClient interface {
+	Upload(ctx context.Context, opts ...grpc.CallOption) (SeSaFileService_UploadClient, error)
 }
 
-type seSaFileClient struct {
+type seSaFileServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewSeSaFileClient(cc grpc.ClientConnInterface) SeSaFileClient {
-	return &seSaFileClient{cc}
+func NewSeSaFileServiceClient(cc grpc.ClientConnInterface) SeSaFileServiceClient {
+	return &seSaFileServiceClient{cc}
 }
 
-func (c *seSaFileClient) Upload(ctx context.Context, opts ...grpc.CallOption) (SeSaFile_UploadClient, error) {
-	stream, err := c.cc.NewStream(ctx, &SeSaFile_ServiceDesc.Streams[0], "/streamProtoc.SeSaFile/Upload", opts...)
+func (c *seSaFileServiceClient) Upload(ctx context.Context, opts ...grpc.CallOption) (SeSaFileService_UploadClient, error) {
+	stream, err := c.cc.NewStream(ctx, &SeSaFileService_ServiceDesc.Streams[0], "/streamProtoc.SeSaFileService/Upload", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &seSaFileUploadClient{stream}
+	x := &seSaFileServiceUploadClient{stream}
 	return x, nil
 }
 
-type SeSaFile_UploadClient interface {
-	Send(*DataFiles) error
-	Recv() (*UploadStatus, error)
+type SeSaFileService_UploadClient interface {
+	Send(*UploadRequest) error
+	Recv() (*UploadResponse, error)
 	grpc.ClientStream
 }
 
-type seSaFileUploadClient struct {
+type seSaFileServiceUploadClient struct {
 	grpc.ClientStream
 }
 
-func (x *seSaFileUploadClient) Send(m *DataFiles) error {
+func (x *seSaFileServiceUploadClient) Send(m *UploadRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *seSaFileUploadClient) Recv() (*UploadStatus, error) {
-	m := new(UploadStatus)
+func (x *seSaFileServiceUploadClient) Recv() (*UploadResponse, error) {
+	m := new(UploadResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// SeSaFileServer is the server API for SeSaFile service.
-// All implementations must embed UnimplementedSeSaFileServer
+// SeSaFileServiceServer is the server API for SeSaFileService service.
+// All implementations must embed UnimplementedSeSaFileServiceServer
 // for forward compatibility
-type SeSaFileServer interface {
-	Upload(SeSaFile_UploadServer) error
-	mustEmbedUnimplementedSeSaFileServer()
+type SeSaFileServiceServer interface {
+	Upload(SeSaFileService_UploadServer) error
+	mustEmbedUnimplementedSeSaFileServiceServer()
 }
 
-// UnimplementedSeSaFileServer must be embedded to have forward compatible implementations.
-type UnimplementedSeSaFileServer struct {
+// UnimplementedSeSaFileServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedSeSaFileServiceServer struct {
 }
 
-func (UnimplementedSeSaFileServer) Upload(SeSaFile_UploadServer) error {
+func (UnimplementedSeSaFileServiceServer) Upload(SeSaFileService_UploadServer) error {
 	return status.Errorf(codes.Unimplemented, "method Upload not implemented")
 }
-func (UnimplementedSeSaFileServer) mustEmbedUnimplementedSeSaFileServer() {}
+func (UnimplementedSeSaFileServiceServer) mustEmbedUnimplementedSeSaFileServiceServer() {}
 
-// UnsafeSeSaFileServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to SeSaFileServer will
+// UnsafeSeSaFileServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SeSaFileServiceServer will
 // result in compilation errors.
-type UnsafeSeSaFileServer interface {
-	mustEmbedUnimplementedSeSaFileServer()
+type UnsafeSeSaFileServiceServer interface {
+	mustEmbedUnimplementedSeSaFileServiceServer()
 }
 
-func RegisterSeSaFileServer(s grpc.ServiceRegistrar, srv SeSaFileServer) {
-	s.RegisterService(&SeSaFile_ServiceDesc, srv)
+func RegisterSeSaFileServiceServer(s grpc.ServiceRegistrar, srv SeSaFileServiceServer) {
+	s.RegisterService(&SeSaFileService_ServiceDesc, srv)
 }
 
-func _SeSaFile_Upload_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(SeSaFileServer).Upload(&seSaFileUploadServer{stream})
+func _SeSaFileService_Upload_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(SeSaFileServiceServer).Upload(&seSaFileServiceUploadServer{stream})
 }
 
-type SeSaFile_UploadServer interface {
-	Send(*UploadStatus) error
-	Recv() (*DataFiles, error)
+type SeSaFileService_UploadServer interface {
+	Send(*UploadResponse) error
+	Recv() (*UploadRequest, error)
 	grpc.ServerStream
 }
 
-type seSaFileUploadServer struct {
+type seSaFileServiceUploadServer struct {
 	grpc.ServerStream
 }
 
-func (x *seSaFileUploadServer) Send(m *UploadStatus) error {
+func (x *seSaFileServiceUploadServer) Send(m *UploadResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *seSaFileUploadServer) Recv() (*DataFiles, error) {
-	m := new(DataFiles)
+func (x *seSaFileServiceUploadServer) Recv() (*UploadRequest, error) {
+	m := new(UploadRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// SeSaFile_ServiceDesc is the grpc.ServiceDesc for SeSaFile service.
+// SeSaFileService_ServiceDesc is the grpc.ServiceDesc for SeSaFileService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var SeSaFile_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "streamProtoc.SeSaFile",
-	HandlerType: (*SeSaFileServer)(nil),
+var SeSaFileService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "streamProtoc.SeSaFileService",
+	HandlerType: (*SeSaFileServiceServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Upload",
-			Handler:       _SeSaFile_Upload_Handler,
+			Handler:       _SeSaFileService_Upload_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},
 	},
-	Metadata: "streamProtoc/streamProtoc.proto",
+	Metadata: "gRPC/streamProtoc/streamProtoc.proto",
 }
