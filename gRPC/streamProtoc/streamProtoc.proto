@@ -2,24 +2,16 @@ syntax = "proto3";
 
 package streamProtoc;
 
-option go_package = "github.com/jaden7856/go-tcp_grpc-server-client/gRPC/streamProtoc";
+option go_package = "github.com/jaden7856/Golang_TCP-Socket/gRPC/streamProtoc";
 
-service UploadFileService {
-  rpc Upload (stream UploadRequest) returns (UploadResponse) {}
+service GRPCSendMsg {
+  rpc SendMsg (stream MessageRequest) returns (stream MessageReply) {}
 }
 
-message UploadRequest {
-  bytes Content = 1;
-  string Filename = 2;
+message MessageRequest {
+  int32 num = 1;
 }
 
-enum UploadStatusCode {
-  Unknown = 0;
-  Ok = 1;
-  Failed = 2;
-}
-
-message UploadResponse {
-  string Message = 1;
-  UploadStatusCode Code = 2;
+message MessageReply {
+  int32 result = 1;
 }

@@ -8,7 +8,7 @@ import (
 	"net"
 	"time"
 
-	streamPb "github.com/jaden7856/Golang_TCP-Socket/gRPC/streamProtoc"
+	streamPb "github.com/jaden7856/go-tcp_grpc-server-client/gRPC/streamProtoc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
@@ -77,9 +77,9 @@ func main() {
 
 	// gRPC 서버 생성
 	grpcServer := grpc.NewServer(
-		//grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
-		//	grpc_recovery.StreamServerInterceptor(),
-		//)),
+	//grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
+	//	grpc_recovery.StreamServerInterceptor(),
+	//)),
 	)
 
 	healthCheck := health.NewServer()

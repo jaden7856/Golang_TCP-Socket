@@ -7,7 +7,7 @@ import (
 	"math/rand"
 	"time"
 
-	streamPb "github.com/jaden7856/Golang_TCP-Socket/gRPC/streamProtoc"
+	streamPb "github.com/jaden7856/go-tcp_grpc-server-client/gRPC/streamProtoc"
 	"google.golang.org/grpc"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )

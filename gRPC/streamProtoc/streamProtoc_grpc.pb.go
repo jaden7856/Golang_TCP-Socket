@@ -14,120 +14,118 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UploadFileServiceClient is the client API for UploadFileService service.
+// GRPCSendMsgClient is the client API for GRPCSendMsg service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UploadFileServiceClient interface {
-	Upload(ctx context.Context, opts ...grpc.CallOption) (UploadFileService_UploadClient, error)
+type GRPCSendMsgClient interface {
+	SendMsg(ctx context.Context, opts ...grpc.CallOption) (GRPCSendMsg_SendMsgClient, error)
 }
 
-type uploadFileServiceClient struct {
+type gRPCSendMsgClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUploadFileServiceClient(cc grpc.ClientConnInterface) UploadFileServiceClient {
-	return &uploadFileServiceClient{cc}
+func NewGRPCSendMsgClient(cc grpc.ClientConnInterface) GRPCSendMsgClient {
+	return &gRPCSendMsgClient{cc}
 }
 
-func (c *uploadFileServiceClient) Upload(ctx context.Context, opts ...grpc.CallOption) (UploadFileService_UploadClient, error) {
-	stream, err := c.cc.NewStream(ctx, &UploadFileService_ServiceDesc.Streams[0], "/streamProtoc.UploadFileService/Upload", opts...)
+func (c *gRPCSendMsgClient) SendMsg(ctx context.Context, opts ...grpc.CallOption) (GRPCSendMsg_SendMsgClient, error) {
+	stream, err := c.cc.NewStream(ctx, &GRPCSendMsg_ServiceDesc.Streams[0], "/streamProtoc.GRPCSendMsg/SendMsg", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &uploadFileServiceUploadClient{stream}
+	x := &gRPCSendMsgSendMsgClient{stream}
 	return x, nil
 }
 
-type UploadFileService_UploadClient interface {
-	Send(*UploadRequest) error
-	CloseAndRecv() (*UploadResponse, error)
+type GRPCSendMsg_SendMsgClient interface {
+	Send(*MessageRequest) error
+	Recv() (*MessageReply, error)
 	grpc.ClientStream
 }
 
-type uploadFileServiceUploadClient struct {
+type gRPCSendMsgSendMsgClient struct {
 	grpc.ClientStream
 }
 
-func (x *uploadFileServiceUploadClient) Send(m *UploadRequest) error {
+func (x *gRPCSendMsgSendMsgClient) Send(m *MessageRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *uploadFileServiceUploadClient) CloseAndRecv() (*UploadResponse, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	m := new(UploadResponse)
+func (x *gRPCSendMsgSendMsgClient) Recv() (*MessageReply, error) {
+	m := new(MessageReply)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// UploadFileServiceServer is the server API for UploadFileService service.
-// All implementations must embed UnimplementedUploadFileServiceServer
+// GRPCSendMsgServer is the server API for GRPCSendMsg service.
+// All implementations must embed UnimplementedGRPCSendMsgServer
 // for forward compatibility
-type UploadFileServiceServer interface {
-	Upload(UploadFileService_UploadServer) error
-	mustEmbedUnimplementedUploadFileServiceServer()
+type GRPCSendMsgServer interface {
+	SendMsg(GRPCSendMsg_SendMsgServer) error
+	mustEmbedUnimplementedGRPCSendMsgServer()
 }
 
-// UnimplementedUploadFileServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedUploadFileServiceServer struct {
+// UnimplementedGRPCSendMsgServer must be embedded to have forward compatible implementations.
+type UnimplementedGRPCSendMsgServer struct {
 }
 
-func (UnimplementedUploadFileServiceServer) Upload(UploadFileService_UploadServer) error {
-	return status.Errorf(codes.Unimplemented, "method Upload not implemented")
+func (UnimplementedGRPCSendMsgServer) SendMsg(GRPCSendMsg_SendMsgServer) error {
+	return status.Errorf(codes.Unimplemented, "method SendMsg not implemented")
 }
-func (UnimplementedUploadFileServiceServer) mustEmbedUnimplementedUploadFileServiceServer() {}
+func (UnimplementedGRPCSendMsgServer) mustEmbedUnimplementedGRPCSendMsgServer() {}
 
-// UnsafeUploadFileServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UploadFileServiceServer will
+// UnsafeGRPCSendMsgServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to GRPCSendMsgServer will
 // result in compilation errors.
-type UnsafeUploadFileServiceServer interface {
-	mustEmbedUnimplementedUploadFileServiceServer()
+type UnsafeGRPCSendMsgServer interface {
+	mustEmbedUnimplementedGRPCSendMsgServer()
 }
 
-func RegisterUploadFileServiceServer(s grpc.ServiceRegistrar, srv UploadFileServiceServer) {
-	s.RegisterService(&UploadFileService_ServiceDesc, srv)
+func RegisterGRPCSendMsgServer(s grpc.ServiceRegistrar, srv GRPCSendMsgServer) {
+	s.RegisterService(&GRPCSendMsg_ServiceDesc, srv)
 }
 
-func _UploadFileService_Upload_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(UploadFileServiceServer).Upload(&uploadFileServiceUploadServer{stream})
+func _GRPCSendMsg_SendMsg_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(GRPCSendMsgServer).SendMsg(&gRPCSendMsgSendMsgServer{stream})
 }
 
-type UploadFileService_UploadServer interface {
-	SendAndClose(*UploadResponse) error
-	Recv() (*UploadRequest, error)
+type GRPCSendMsg_SendMsgServer interface {
+	Send(*MessageReply) error
+	Recv() (*MessageRequest, error)
 	grpc.ServerStream
 }
 
-type uploadFileServiceUploadServer struct {
+type gRPCSendMsgSendMsgServer struct {
 	grpc.ServerStream
 }
 
-func (x *uploadFileServiceUploadServer) SendAndClose(m *UploadResponse) error {
+func (x *gRPCSendMsgSendMsgServer) Send(m *MessageReply) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *uploadFileServiceUploadServer) Recv() (*UploadRequest, error) {
-	m := new(UploadRequest)
+func (x *gRPCSendMsgSendMsgServer) Recv() (*MessageRequest, error) {
+	m := new(MessageRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// UploadFileService_ServiceDesc is the grpc.ServiceDesc for UploadFileService service.
+// GRPCSendMsg_ServiceDesc is the grpc.ServiceDesc for GRPCSendMsg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var UploadFileService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "streamProtoc.UploadFileService",
-	HandlerType: (*UploadFileServiceServer)(nil),
+var GRPCSendMsg_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "streamProtoc.GRPCSendMsg",
+	HandlerType: (*GRPCSendMsgServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "Upload",
-			Handler:       _UploadFileService_Upload_Handler,
+			StreamName:    "SendMsg",
+			Handler:       _GRPCSendMsg_SendMsg_Handler,
+			ServerStreams: true,
 			ClientStreams: true,
 		},
 	},

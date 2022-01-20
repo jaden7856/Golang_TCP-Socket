@@ -2,5 +2,27 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/cloud.google.com/go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/antlr/antlr4" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/census-instrumentation/opencensus-proto" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/cespare/xxhash" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/cncf/udpa" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/cncf/xds" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/envoyproxy/go-control-plane" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/envoyproxy/protoc-gen-validate" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/golang/glog" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/golang/protobuf" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/google/cel-go" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/google/go-cmp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/google/uuid" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/hashicorp/golang-lru" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/jaden7856/go-tcp_grpc-server-client" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/github.com/stoewer/go-strcase" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/golang.org/x/net" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/golang.org/x/oauth2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/golang.org/x/text" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/google.golang.org/genproto" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/google.golang.org/grpc" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/google.golang.org/protobuf" vcs="Git" />
   </component>
 </project>
