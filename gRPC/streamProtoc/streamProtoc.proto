@@ -4,8 +4,8 @@ package streamProtoc;
 
 option go_package = "github.com/jaden7856/go-tcp_grpc-server-client/gRPC/streamProtoc";
 
-service SeSaFileService {
-  rpc Upload (stream UploadRequest) returns (stream UploadResponse) {}
+service UploadFileService {
+  rpc Upload (stream UploadRequest) returns (UploadResponse) {}
 }
 
 message UploadRequest {
